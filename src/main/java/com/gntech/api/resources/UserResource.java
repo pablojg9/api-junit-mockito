@@ -17,20 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
 public class UserResource {
 
     private static final String ID = "/{id}";
-    private final UserService service;
-    private final UserMapper mapper;
 
     @Autowired
-    public UserResource(UserService service, UserMapper mapper) {
-        this.service = service;
-        this.mapper = mapper;
-    }
+    private UserService service;
+
+    @Autowired
+    private UserMapper mapper;
 
     @GetMapping(ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
@@ -39,7 +38,7 @@ public class UserResource {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
-        List<UserDTO> findAll = service.findAll().stream().map(mapper::entityToDto).toList();
+        List<UserDTO> findAll = service.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
         return ResponseEntity.ok().body(findAll);
     }
 

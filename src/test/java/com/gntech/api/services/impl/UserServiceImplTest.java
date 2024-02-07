@@ -68,7 +68,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("when find by id then return and object not exception")
+    @DisplayName("when find by id then return an object not exception")
     void whenFindByIdThenReturnAnObjectNotException() {
         when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(USER_NOT_FOUND));
         try {
